@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div>
+      <h1>Canvasのサイズ設定</h1>
+
+      <p>CSSでCanvasサイズを設定しようとすると歪んだ表示になってしまう。</p>
+<pre><code>
+const size = 300;
+canvas.style.width = `${size}px`;
+canvas.style.height = `${size}px`;
+
+ctx.fillStyle = '#0055aa';
+ctx.fillRect(0, 0, size, size);
+ctx.fillStyle = '#557799';
+ctx.fillRect(20, 20, size - 40, size - 40);
+</code></pre>
+
+      <canvas class="ex01"></canvas>
+
+      <p>原因は、Canvas要素がデフォルトで持つ縦横サイズに対し、CSSで引き伸ばした表示にしようとするため。CSSを当てる場合は先にCanvas要素のサイズを設定する。</p>
+<pre><code>
+// 最初に要素のサイズを固定してから...
+const canvasSize = 300;
+canvas.width = canvasSize;
+canvas.height = canvasSize;
+
+ctx.fillStyle = '#0055aa';
+ctx.fillRect(0, 0, canvasSize, canvasSize);
+ctx.fillStyle = '#557799';
+ctx.fillRect(20, 20, canvasSize - 40, canvasSize - 40);
+</code></pre>
+
+      <canvas class="ex02-1"></canvas>
+
+<pre><code>
+// CSSで見た目のサイズを設定する
+const cssSize = 150;
+canvas.style.width = `${cssSize}px`;
+canvas.style.height = `${cssSize}px`;
+</code></pre>
+
+      <canvas class="ex02-2"></canvas>
+
+      <p>*CSSを当てた後にctx.fillRectするのは問題ない</p>
+    </div>
+
+    <div>
+      <h1>Retinaディスプレイの対応</h1>
+      <p>Retinaディスプレイで曲線を含む描画をするとぼやけた表示になる</p>
+<pre><code>
+  ctx.fillStyle = '#557799';
+  ctx.fillRect(20, 20, canvasSize - 40, canvasSize - 40);
+
+  ctx.fillStyle = '#aaccff';
+  ctx.font = `${canvasSize - 40}px Arial`;
+  ctx.textBaseline = 'top';
+
+  ctx.fillText('あ', 20, 40);
+</code></pre>
+
+      <canvas class="ex03-1"></canvas>
+
+      <p>「Retinaディスプレイでも画像をぼやけさせない処置」と同様に、一旦Canvasを大きいサイズにしてから縮小させることでぼやけを解消する</p>
+
+<pre><code>
+  // 最初に要素のサイズを固定してから...
+  const canvasSize = 200;
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
+
+  // 解像度に合わせた拡大率を指定する
+  const scale = window.devicePixelRatio;
+  ctx.scale(scale, scale);
+</code></pre>
+
+      <canvas class="ex03-2"></canvas>
+
+      <p>scaleを設定しても、canvas要素自体は大きくならないのでscaleを設定前に、Canvasのサイズも大きくしておく</p>
+
+<pre><code>
+  const scale = window.devicePixelRatio;
+
+  // 最初に要素のサイズを固定してから...
+  const canvasSize = 200;
+  canvas.width = canvasSize * scale;
+  canvas.height = canvasSize * scale;
+
+  // 拡大率を指定する
+  ctx.scale(scale, scale);
+</code></pre>
+
+      <canvas class="ex03-3"></canvas>
+
+      <p>scaleの指定で拡大した見た目になったCanvasをCSSの指定で本来のCanvasサイズに戻す</p>
+
+<pre><code>
+  const scale = window.devicePixelRatio;
+
+  // 最初に要素のサイズを固定してから...
+  const canvasSize = 200;
+  canvas.width = canvasSize * scale;
+  canvas.height = canvasSize * scale;
+
+  // 拡大率を指定する
+  ctx.scale(scale, scale);
+
+  // scaleで拡縮した見た目になったcanvasをstyleで本来のcanvasサイズに戻す
+  canvas.style.width = `${canvasSize}px`;
+  canvas.style.height = `${canvasSize}px`;
+</code></pre>
+
+      <canvas class="ex03-4"></canvas>
+    </div>
+    <script src="scripts/ex02.js"></script>
+  </body>
+</html>

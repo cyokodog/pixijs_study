@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>pixelRatioが2のRetinaディスプレイにおける画像の表示</h1>
+    <p>今見ているモニターのpixelRatioは <span class="pixelRatio"></span> です。</p>
+
+    <h2>例1</h2>
+    <div>
+      <h3>400x200pxの解像度72pxの画像</h3>
+      <p>400x200pxで表示され少しぼやける</p>
+      <img src="images/400_200.png"/>
+    </div>
+    <div>
+      <h3>上記画像のスクショ</h3>
+      <p>800x400pxのサイズで生成され、だいぶぼやけて表示される</p>
+      <img src="images/400_200(800_400).png"/>
+    </div>
+    <div>
+      <h3>上記スクショに400x200pxのスタイルを当てる</h3>
+      <p>だいぶぼやけが解消される</p>
+      <img src="images/400_200(800_400).png" style="width:400px;height:200px"/>
+    </div>
+    <div>
+      <h3>最初の画像に200x100pxのスタイルを当てる</h3>
+      <p>ぼやけが解消される</p>
+      <img src="images/400_200.png" style="width:200px;height:100px"/>
+    </div>
+
+    <h2>例2</h2>
+
+    <div>
+      <h3>400x400pxの解像度300pxの画像</h3>
+      <p>少しぼやけて表示される</p>
+      <img src="images/hiragana400_400.png"/>
+    </div>
+    <div>
+      <h3>上記画像に200x200pxのスタイルを当てる</h3>
+      <p>ぼやけが解消される</p>
+      <img src="images/hiragana400_400.png" style="width:200px;height:200px"/>
+    </div>
+
+    <h2>Retinaディスプレイでもぼやけさせない方法</h2>
+
+    <h3>画像を倍サイズで作っておき表示時に1/2にする</h3>
+
+    <p>image要素に対しては上記のような処置をし、背景画像に対してはbackground-sizeを用いる。</p>
+
+    <pre><code>
+      background-size: 200px 100px;
+    </code></pre>
+
+    <h3>画像を2種類作っておきメディアクエリで出し分ける</h3>
+    <pre><code>
+      @media screen and (min-resolution: 2dppx) { /* ... */ }
+      @media screen and (resolution >= 2dppx) { /* ... */ }
+    </code></pre>
+
+    <script src="scripts/ex01.js"></script>
+  </body>
+</html>

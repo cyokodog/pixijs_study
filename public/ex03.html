@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div>
+      <h1>PixiJSでのRetinaディスプレイの対応</h1>
+
+      <p>Canvasで描画した時と同様にぼやける。</p>
+<pre><code>
+</code></pre>
+
+      <canvas class="ex01-1"></canvas>
+
+      <p>resolutionを指定することで、Canvasのscaleとwidthとheightの設定をしてくれる。</p>
+<pre><code>
+  const app = new PIXI.Application({
+    ...
+    resolution: window.devicePixelRatio || 1,
+  });
+</code></pre>
+
+      <canvas class="ex01-2"></canvas>
+
+      <p>autoDensityを指定することで、CSSで元のサイズに戻してくれる。</p>
+<pre><code>
+  const app = new PIXI.Application({
+    ...
+    resolution: window.devicePixelRatio || 1,
+    autoDensity: true, // 旧バージョンでは autoResize
+  });
+</code></pre>
+
+      <canvas class="ex01-3"></canvas>
+    </div>
+
+
+
+    <div>
+      <h1>特定範囲の画像としての切り出し</h1>
+
+      <p>編集したCanvasの特定範囲のみを切り出して、画像として保存したい場合がある。この場合もdevicePixelRatioを考慮した切り出しを行う必要がある。</p>
+
+      <p>特定範囲を切り出して別のCanvasに転写し...</p>
+
+<pre><code>
+  const scale = window.devicePixelRatio || 1;
+
+  // 切り出しはscale()で拡大したサイズを基準に行う必要がある。
+  // 文字周辺の塗りつぶしエリアを切り出そうとした場合、
+  // このエリアはCanvasに対し20pxのマージン位置に描画したので、
+  // この位置に対しscale()の拡大率を掛けて切り出し範囲を求める。
+  const srcCanvasX = 20 * scale;
+  const srcCanvasY = 20 * scale;
+  const srcCanvasWidth = srcCanvas.width - 40 * scale;
+  const srcCanvasHeight = srcCanvas.height - 40 * scale;
+
+  const distCanvasX = 0;
+  const distCanvasY = 0;
+  const distWidth = srcCanvasWidth;
+  const distHeight = srcCanvasHeight;
+
+  distCanvas.width = distWidth;
+  distCanvas.height = distHeight;
+  distCtx.clearRect(0, 0, distWidth, distHeight);
+
+  distCtx.drawImage(
+    srcCanvas,
+
+    srcCanvasX,
+    srcCanvasY,
+    srcCanvasWidth,
+    srcCanvasHeight,
+
+    distCanvasX,
+    distCanvasY,
+    distWidth,
+    distHeight,
+  );
+</code></pre>
+
+      <canvas class="ex02-2"></canvas>
+
+      <p>画像を生成してCSSでサイズを縮小する。</p>
+
+
+<pre><code>
+  distImage.src = distCanvas.toDataURL('image/png');
+  distImage.style.width = `${distWidth / scale}px`;
+  distImage.style.height = `${distHeight / scale}px`;
+</code></pre>
+
+
+      <img class="ex02-2"/>
+
+      <h1>実寸での画像の切り出し</h1>
+
+      <p>画像を実寸で生成しなければならない事情があるけど、少しでも画質をマシにしたい場合は、実寸でCanvasを転写した後に画像を生成する。</p>
+
+      <p>実寸でCanvasを転写し...</p>
+<pre><code>
+  // 出力画像のサイズをdevicePixelRatioで割って縮小する
+  const distCanvasX = 0;
+  const distCanvasY = 0;
+  const distWidth = srcCanvasWidth / scale;
+  const distHeight = srcCanvasHeight / scale;
+</code></pre>
+      <canvas class="ex02-3"></canvas>
+
+      <p>画像を生成する。</p>
+
+<pre><code>
+  distImage.src = distCanvas.toDataURL('image/png');
+</code></pre>
+
+
+
+      <img class="ex02-3"/>
+
+
+    </div>
+    <script src="scripts/ex03.js"></script>
+  </body>
+</html>

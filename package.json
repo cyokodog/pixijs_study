@@ -1,0 +1,31 @@
+{
+  "name": "pixijs_study",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "webpack --mode production",
+    "build:watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyokodog/pixijs_study.git"
+  },
+  "keywords": [],
+  "author": "cyokodog <cyokodog@gmail.com> (https://www.cyokodog.net/)",
+  "bugs": {
+    "url": "https://github.com/cyokodog/pixijs_study/issues"
+  },
+  "homepage": "https://github.com/cyokodog/pixijs_study#readme",
+  "devDependencies": {
+    "@types/node": "^13.9.8",
+    "@types/pixi.js": "^5.0.0",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "pixi.js": "^5.2.1"
+  }
+}
