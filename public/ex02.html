@@ -2,7 +2,7 @@
 <html>
   <body>
     <div>
-      <h1>Canvasのサイズ設定</h1>
+      <h1 id="demo1">Canvasのサイズ設定</h1>
 
       <p>CSSでCanvasサイズを設定しようとすると歪んだ表示になってしまう。</p>
 <pre><code>
@@ -46,7 +46,7 @@ canvas.style.height = `${cssSize}px`;
     </div>
 
     <div>
-      <h1>Retinaディスプレイの対応</h1>
+      <h1 id="demo2">Retinaディスプレイの対応</h1>
       <p>Retinaディスプレイで曲線を含む描画をするとぼやけた表示になる</p>
 <pre><code>
   ctx.fillStyle = '#557799';
