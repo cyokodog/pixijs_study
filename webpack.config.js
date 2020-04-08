@@ -4,6 +4,7 @@ module.exports = {
     ex01: './src/ex01',
     ex02: './src/ex02',
     ex03: './src/ex03',
+    ex04: './src/ex04',
   },
   output: {
     path: `${__dirname}/public/scripts`,
