@@ -165,6 +165,12 @@ requestAnimationFrame(() => {
   distImage.src = distCanvas.toDataURL('image/png');
   distImage.style.width = `${distWidth / scale}px`;
   distImage.style.height = `${distHeight / scale}px`;
+
+  const link = document.createElement('a');
+  link.href = distImage.src;
+  link.download = 'foo.png';
+  link.textContent = 'download';
+  document.body.appendChild(link);
 });
 
 requestAnimationFrame(() => {
