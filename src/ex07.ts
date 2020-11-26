@@ -6,7 +6,7 @@ import { OutlineFilter } from 'pixi-filters';
   if (!canvas) return;
 
   const app = new PIXI.Application({
-    width: 1200,
+    width: 1600,
     height: 400,
     view: canvas,
     backgroundColor: 0xf0f0f0,
@@ -36,6 +36,7 @@ import { OutlineFilter } from 'pixi-filters';
     addImage('./images/sample1.png', 0);
     addImage('./images/sample2.png', 368);
     addImage('./images/sample3.png', 736);
+    addImage('./images/sample4.png', 1104);
   };
 
   $thickness!.addEventListener('input', function () {
